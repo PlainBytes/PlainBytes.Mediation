@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="PlainBytes.Mediation.Mediator.Contracts/PlainBytes.Mediation.Mediator.Contracts.csproj" Id="b99bdc5d-be03-495f-8f08-e50a8e0219b8" />
+  <Project Path="PlainBytes.Mediation.Mediator.Tests/PlainBytes.Mediation.Mediator.Tests.csproj" Id="da63807b-cbb0-4a9a-a5ae-98607340190c" />
+  <Project Path="PlainBytes.Mediation.Mediator/PlainBytes.Mediation.Mediator.csproj" Id="94cf5e7c-95a8-431d-976e-c5d3cf43161f" />
+</Solution>
