@@ -5,6 +5,9 @@ namespace PlainBytes.Mediation.Mediator.Contracts
     /// </summary>
     public interface INotification;
 
+    /// <summary>
+    /// Defines a notification that should be handled by a specific notification strategy.
+    /// </summary>
     public interface IStrategicNotification : INotification
     {
         /// <summary>
