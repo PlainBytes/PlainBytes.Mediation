@@ -8,8 +8,10 @@ namespace PlainBytes.Mediation.Mediator.Strategies
 
         public ValueTask Publish<TNotification>(TNotification notification, IEnumerable<INotificationHandler<TNotification>> handlers, CancellationToken cancellationToken = default) where TNotification : INotification
         {
-            var tasks = handlers.Select(handler => handler.Handle(notification, cancellationToken));
-
+            var tasks = handlers.Select(handler => handler.Handle(notification, cancellationToken))
+                .Where(x => x.IsCompletedSuccessfully is false)
+                .Select( x => x.AsTask());
+            
             return new ValueTask(Task.WhenAll(tasks));
         }
     }
