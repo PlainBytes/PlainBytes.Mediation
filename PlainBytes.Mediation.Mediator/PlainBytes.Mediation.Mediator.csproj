@@ -15,6 +15,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>plain-bytes-logo.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/PlainBytes/PlainBytes.Mediation</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
