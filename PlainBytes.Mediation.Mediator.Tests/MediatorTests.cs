@@ -1,4 +1,3 @@
-using FakeItEasy;
 using Microsoft.Extensions.DependencyInjection;
 using PlainBytes.Mediation.Mediator.Contracts;
 using PlainBytes.Mediation.Mediator.Handlers;
