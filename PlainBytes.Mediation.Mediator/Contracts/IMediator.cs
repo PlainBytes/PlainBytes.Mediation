@@ -1,6 +1,11 @@
 namespace PlainBytes.Mediation.Mediator.Contracts
 {
     /// <summary>
+    /// Throw if the execution of a request was cancelled by an explicit decision, should be used only for business rules.
+    /// </summary>
+    public class RequestCancelledException : Exception;
+
+    /// <summary>
     /// The central interface for the mediator pattern implementation, providing a unified entry point
     /// for sending requests, publishing notifications, and executing queries.
     /// </summary>

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PlainBytes.Mediation.Mediator.Contracts;
 using PlainBytes.Mediation.Mediator.Handlers;
+using PlainBytes.Mediation.Mediator.Notifications;
 
 namespace PlainBytes.Mediation.Mediator.Tests
 {
