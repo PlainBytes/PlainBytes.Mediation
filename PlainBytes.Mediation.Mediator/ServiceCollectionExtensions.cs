@@ -14,7 +14,7 @@ namespace PlainBytes.Mediation.Mediator
         /// </summary>
         /// <param name="services">Service collection to which it should be added.</param>
         /// <param name="strategies">Notification publisher strategies to use. If not provided default strategies will be used.</param>
-        public static IServiceCollection AddMediator(this IServiceCollection services, NotificationPublisherStrategies? strategies)
+        public static IServiceCollection AddMediator(this IServiceCollection services, NotificationPublisherStrategies? strategies = null)
         {
             ArgumentNullException.ThrowIfNull(services);
 
