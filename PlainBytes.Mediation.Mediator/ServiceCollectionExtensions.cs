@@ -5,15 +5,26 @@ using PlainBytes.Mediation.Mediator.Strategies;
 
 namespace PlainBytes.Mediation.Mediator
 {
+    /// <summary>
+    /// Represents a collection of notification publisher strategies.
+    /// </summary>
     public class NotificationPublisherStrategies : IEnumerable<KeyValuePair<string, Type>>
     {
         private readonly Dictionary<string, Type> _strategies = new();
 
+        /// <summary>
+        /// Adds a notification publisher strategy to the collection.
+        /// </summary>
+        /// <typeparam name="TStrategy">Type of the strategy to add.</typeparam>
+        /// <param name="name">Name of the strategy.</param>
         public void AddStrategy<TStrategy>(string name) where TStrategy : IPublisherStrategy
         {
             _strategies[name] = typeof(TStrategy);
         }
 
+        /// <summary>
+        /// Gets the default notification publisher strategies.
+        /// </summary>
         public static NotificationPublisherStrategies GetDefault()
         {
             var strategies = new NotificationPublisherStrategies();
@@ -24,6 +35,9 @@ namespace PlainBytes.Mediation.Mediator
             return strategies;
         }
 
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
         public IEnumerator<KeyValuePair<string, Type>> GetEnumerator() => _strategies.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -32,8 +46,17 @@ namespace PlainBytes.Mediation.Mediator
         }
     }
 
+    /// <summary>
+    /// Defines extension methods for adding mediator services to the service collection.
+    /// </summary>
     public static class ServiceCollectionExtensions
     {
+
+        /// <summary>
+        /// Adds mediator services to the service collection.
+        /// </summary>
+        /// <param name="services">Service collection to which it should be added.</param>
+        /// <param name="strategies">Notification publisher strategies to use. If not provided default strategies will be used.</param>
         public static IServiceCollection AddMediator(this IServiceCollection services, NotificationPublisherStrategies? strategies)
         {
             ArgumentNullException.ThrowIfNull(services);

@@ -6,15 +6,6 @@ namespace PlainBytes.Mediation.Mediator.Contracts
     /// to be applied to notification processing through a middleware-like pattern.
     /// </summary>
     /// <typeparam name="TNotification">The type of notification that this behavior can handle. Must implement <see cref="INotification"/>.</typeparam>
-    /// <remarks>
-    /// Notification behaviors are executed in a pipeline pattern where each behavior can:
-    /// <list type="bullet">
-    /// <item>Perform pre-processing logic before the notification is handled</item>
-    /// <item>Call the next behavior in the pipeline using the <paramref name="next"/> delegate</item>
-    /// <item>Perform post-processing logic after the notification has been handled</item>
-    /// <item>Short-circuit the pipeline by not calling <paramref name="next"/></item>
-    /// </list>
-    /// </remarks>
     /// <example>
     /// <code>
     /// public class LoggingNotificationBehavior&lt;TNotification&gt; : INotificationBehavior&lt;TNotification&gt;

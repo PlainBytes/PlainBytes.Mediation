@@ -8,18 +8,6 @@ namespace PlainBytes.Mediation.Mediator.Contracts
     /// </summary>
     /// <typeparam name="TRequest">The type of request that this behavior can handle. Must implement <see cref="IRequest"/>.</typeparam>
     /// <typeparam name="TResponse">The type of response that will be returned by the request processing.</typeparam>
-    /// <remarks>
-    /// Pipeline behaviors are executed in a chain-of-responsibility pattern where each behavior can:
-    /// <list type="bullet">
-    /// <item>Perform pre-processing logic before the request is handled</item>
-    /// <item>Call the next behavior in the pipeline using the <paramref name="next"/> delegate</item>
-    /// <item>Perform post-processing logic after the request has been handled</item>
-    /// <item>Short-circuit the pipeline by not calling <paramref name="next"/> and returning a response directly</item>
-    /// <item>Modify the request before passing it to the next behavior</item>
-    /// <item>Transform or enrich the response before returning it</item>
-    /// </list>
-    /// Common use cases include validation, logging, caching, retry logic, and authorization.
-    /// </remarks>
     /// <example>
     /// <code>
     /// public class ValidationBehavior&lt;TRequest, TResponse&gt; : IPipelineBehavior&lt;TRequest, TResponse&gt;
