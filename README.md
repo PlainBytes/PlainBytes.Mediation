@@ -83,6 +83,25 @@ var failedResult = await mediator.TryGet(new FailingQuery());
 Console.WriteLine($"TryGet failed result: {failedResult}");
 ```
 
+#### 6. Adding Logging Pipeline Behaviors
+
+You can enable built-in logging behaviors for requests and notifications. These behaviors use Microsoft.Extensions.Logging.
+
+```csharp
+// Basic exception logging for requests & notifications
+services.AddLoggingPipelineBehaviors();
+```
+
+The basic logging behaviors log errors when a request handler or notification handler throws.
+For additional performance timing (logs successful completion time and failures):
+
+```csharp
+// Logs execution time and errors for requests, and errors for notifications
+services.AddPerformanceLoggingPipelineBehaviors();
+```
+
+Choose only one of AddLoggingPipelineBehaviors or AddPerformanceLoggingPipelineBehaviors depending on whether you want timing information.
+
 ---
 
 For more examples, see the `SampleApp/Program.cs` file in this repository.
