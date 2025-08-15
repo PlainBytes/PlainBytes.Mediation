@@ -47,8 +47,8 @@ namespace PlainBytes.Mediation.Mediator.Contracts
         /// Handles the request within the pipeline, allowing for pre and post-processing logic.
         /// </summary>
         /// <param name="request">The request instance to be processed.</param>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
         /// <param name="next">A delegate representing the next behavior in the pipeline. Call this to continue pipeline execution.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
         /// <returns>A <see cref="ValueTask{TResponse}"/> representing the asynchronous operation with the response.</returns>
         /// <remarks>
         /// Implementations should:
@@ -62,6 +62,6 @@ namespace PlainBytes.Mediation.Mediator.Contracts
         /// </list>
         /// </remarks>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="request"/> is null.</exception>
-        ValueTask<TResponse> Handle(TRequest request, CancellationToken cancellationToken, Func<ValueTask<TResponse>> next);
+        ValueTask<TResponse> Handle(TRequest request, Func<ValueTask<TResponse>> next, CancellationToken cancellationToken);
     }
 }

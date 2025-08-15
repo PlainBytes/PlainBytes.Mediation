@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using PlainBytes.Mediation.Mediator.Behaviors;
 using PlainBytes.Mediation.Mediator.Contracts;
 using PlainBytes.Mediation.Mediator.Notifications;
 
@@ -26,6 +27,28 @@ namespace PlainBytes.Mediation.Mediator
                 .AddSingleton<INotificationRegistry, NotificationRegistry>()
                 .AddSingleton(typeof(INotificationRegistry<>),typeof(GenericNotificationRegistry<>))
                 .AddPublishers(strategies ?? NotificationPublisherStrategies.GetDefault());
+        }
+
+        /// <summary>
+        /// Adds logging pipeline behaviors to the service collection.
+        /// </summary>
+        public static IServiceCollection AddLoggingPipelineBehaviors(this IServiceCollection services)
+        {
+            ArgumentNullException.ThrowIfNull(services);
+            return services
+                .AddSingleton(typeof(IPipelineBehavior<,>), typeof(RequestLoggingPipelineBehavior<,>))
+                .AddSingleton(typeof(INotificationBehavior<>), typeof(NotificationLoggingPipelineBehavior<>));
+        }
+
+        /// <summary>
+        /// Adds logging pipeline behaviors to the service collection.
+        /// </summary>
+        public static IServiceCollection AddPerformanceLoggingPipelineBehaviors(this IServiceCollection services)
+        {
+            ArgumentNullException.ThrowIfNull(services);
+            return services
+                .AddSingleton(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceLoggingPipelineBehavior<,>))
+                .AddSingleton(typeof(INotificationBehavior<>), typeof(NotificationLoggingPipelineBehavior<>));
         }
 
         internal static IServiceCollection AddPublishers(this IServiceCollection services, NotificationPublisherStrategies strategies)

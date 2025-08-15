@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PlainBytes.Mediation.Mediator;
 using PlainBytes.Mediation.Mediator.Contracts;
 using PlainBytes.Mediation.Mediator.Results;
@@ -9,6 +10,13 @@ using SampleApp.Queries;
 // 1. Setup Dependency Injection and Mediator
 var services = new ServiceCollection();
 services.AddMediator();
+
+services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
+
+// Add logging or performance logging behaviors, they require logging
+// one only logs if the request fails, the other logs the time taken for the request.
+services.AddPerformanceLoggingPipelineBehaviors();
+//services.AddLoggingPipelineBehaviors();
 
 // 2. Register Handlers
 services.AddTransient<IRequestHandler<CreateUserCommand>, CreateUserCommandHandler>();

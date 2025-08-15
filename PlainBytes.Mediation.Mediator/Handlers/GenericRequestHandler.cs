@@ -13,7 +13,7 @@ namespace PlainBytes.Mediation.Mediator.Handlers
         public ValueTask Handle(object request, IServiceProvider provider, CancellationToken cancellationToken = default)
             => HandleConcrete((TRequest)request, provider, cancellationToken);
 
-        public async ValueTask HandleConcrete(IRequest request, IServiceProvider provider, CancellationToken cancellationToken = default)
+        private async ValueTask HandleConcrete(IRequest request, IServiceProvider provider, CancellationToken cancellationToken = default)
         {
             var handler = provider.GetRequiredService<IRequestHandler<TRequest>>();
             var behaviors = provider.GetServices<IPipelineBehavior<TRequest, None>>().Reverse();
@@ -23,7 +23,7 @@ namespace PlainBytes.Mediation.Mediator.Handlers
             foreach (var behavior in behaviors)
             {
                 var next = handlerDelegate;
-                handlerDelegate = async () => await behavior.Handle((TRequest)request, cancellationToken, ToNone(next));
+                handlerDelegate = async () => await behavior.Handle((TRequest)request, ToNone(next), cancellationToken);
             }
 
             await handlerDelegate();

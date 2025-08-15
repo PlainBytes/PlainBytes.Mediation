@@ -52,13 +52,13 @@ namespace PlainBytes.Mediation.Mediator.Tests
             _serviceCollection.AddSingleton(CommandBehavior);
             _sut = Create();
 
-            A.CallTo(() => CommandBehavior.Handle(command, CancellationToken.None, A<Func<ValueTask<None>>>.Ignored)).Returns(ValueTask.FromResult(new None()));
+            A.CallTo(() => CommandBehavior.Handle(command, A<Func<ValueTask<None>>>.Ignored, CancellationToken.None)).Returns(ValueTask.FromResult(new None()));
 
             // Act
             await _sut.Send(command);
 
             // Assert
-            A.CallTo(() => CommandBehavior.Handle(command, CancellationToken.None, A<Func<ValueTask<None>>>.Ignored)).MustHaveHappened();
+            A.CallTo(() => CommandBehavior.Handle(command, A<Func<ValueTask<None>>>.Ignored, CancellationToken.None)).MustHaveHappened();
         }
 
         [Fact]
@@ -124,13 +124,13 @@ namespace PlainBytes.Mediation.Mediator.Tests
             _serviceCollection.AddSingleton(notificationBehavior);
             _sut = Create();
 
-            A.CallTo(() => notificationBehavior.Handle(notification, CancellationToken.None, A<Func<ValueTask>>._)).Returns(ValueTask.CompletedTask);
+            A.CallTo(() => notificationBehavior.Handle(notification, A<Func<ValueTask>>._, CancellationToken.None)).Returns(ValueTask.CompletedTask);
 
             // Act
             await _sut.Publish(notification);
 
             // Assert
-            A.CallTo(() => notificationBehavior.Handle(notification, CancellationToken.None, A<Func<ValueTask>>._)).MustHaveHappened();
+            A.CallTo(() => notificationBehavior.Handle(notification, A<Func<ValueTask>>._, CancellationToken.None)).MustHaveHappened();
         }
 
         [Fact]

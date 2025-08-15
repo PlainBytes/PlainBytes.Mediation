@@ -44,6 +44,6 @@ namespace PlainBytes.Mediation.Mediator.Contracts
         /// <item>Respect the <paramref name="cancellationToken"/> for cancellation support</item>
         /// </list>
         /// </remarks>
-        ValueTask Handle(TNotification notification, CancellationToken cancellationToken, Func<ValueTask> next);
+        ValueTask Handle(TNotification notification, Func<ValueTask> next, CancellationToken cancellationToken);
     }
 }
