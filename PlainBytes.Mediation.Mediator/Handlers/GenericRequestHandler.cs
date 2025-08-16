@@ -3,12 +3,7 @@ using PlainBytes.Mediation.Mediator.Contracts;
 
 namespace PlainBytes.Mediation.Mediator.Handlers
 {
-    internal interface IHandler
-    {
-        ValueTask Handle(object request, IServiceProvider provider, CancellationToken cancellationToken = default);
-    }
-
-    internal sealed class GenericRequestHandler<TRequest> : IHandler where TRequest : IRequest
+  internal sealed class GenericRequestHandler<TRequest> : IHandler where TRequest : IRequest
     {
         public ValueTask Handle(object request, IServiceProvider provider, CancellationToken cancellationToken = default)
             => HandleConcrete((TRequest)request, provider, cancellationToken);
