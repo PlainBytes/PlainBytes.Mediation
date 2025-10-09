@@ -18,7 +18,7 @@ namespace PlainBytes.Mediation.Mediator
             {
                 var handlerType = typeof(GenericRequestResponseHandler<,>).MakeGenericType(type, typeof(TResponse));
 
-                return Activator.CreateInstance(handlerType) ?? throw new InvalidOperationException($"Can not create handler {handlerType} for notification {type}");
+                return Activator.CreateInstance(handlerType) ?? throw new InvalidOperationException($"Cannot create handler {handlerType} for request {type}");
             });
 
             return handler.Handle(request, serviceProvider, cancellationToken);
@@ -32,7 +32,7 @@ namespace PlainBytes.Mediation.Mediator
             {
                 var handlerType = typeof(GenericRequestHandler<>).MakeGenericType(type);
 
-                return Activator.CreateInstance(handlerType) ?? throw new InvalidOperationException($"Can not create handler {handlerType} for notification {type}");
+                return Activator.CreateInstance(handlerType) ?? throw new InvalidOperationException($"Cannot create handler {handlerType} for request {type}");
             });
 
             await handler.Handle(request, serviceProvider, cancellationToken);
@@ -46,7 +46,7 @@ namespace PlainBytes.Mediation.Mediator
             {
                 var handlerType = typeof(GenericNotificationHandler<>).MakeGenericType(type);
 
-                return Activator.CreateInstance(handlerType) ?? throw new InvalidOperationException($"Can not create handler {handlerType} for notification {type}");
+                return Activator.CreateInstance(handlerType) ?? throw new InvalidOperationException($"Cannot create handler {handlerType} for notification {type}");
             });
 
             return handler.Handle(notification, serviceProvider, cancellationToken);

@@ -22,13 +22,13 @@ namespace PlainBytes.Mediation.Mediator.Behaviors
             {
                 var result = await next();
 
-                logger.LogInformation("Request {requestName} completed in {time} ms", requestName, Stopwatch.GetElapsedTime(start).Milliseconds);
+                logger.LogInformation("Request {requestName} completed in {time} ms", requestName, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
 
                 return result;
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Request {requestName} failed in {time}", requestName, Stopwatch.GetElapsedTime(start).Milliseconds);
+                logger.LogError(ex, "Request {requestName} failed in {time} ms", requestName, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
 
                 throw; // Propagate the exception
             }

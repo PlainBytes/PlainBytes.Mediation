@@ -48,7 +48,7 @@ namespace PlainBytes.Mediation.Mediator
             ArgumentNullException.ThrowIfNull(services);
             return services
                 .AddSingleton(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceLoggingPipelineBehavior<,>))
-                .AddSingleton(typeof(INotificationBehavior<>), typeof(NotificationLoggingPipelineBehavior<>));
+                .AddSingleton(typeof(INotificationBehavior<>), typeof(NotificationPerformanceLoggingPipelineBehavior<>));
         }
 
         internal static IServiceCollection AddPublishers(this IServiceCollection services, NotificationPublisherStrategies strategies)
