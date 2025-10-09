@@ -26,8 +26,9 @@ namespace PlainBytes.Mediation.Mediator
                 if (t.IsGenericType)
                 {
                     var arguments = t.GetGenericArguments();
-                    var trimmed = $"`{arguments.Length}".ToArray();
-                    return $"{t.Name.TrimEnd(trimmed)}<{string.Join(',', arguments.Select(x => x.GetFormattedName()))}>";
+                    var backtickIndex = t.Name.IndexOf('`');
+                    var baseName = backtickIndex > 0 ? t.Name.Substring(0, backtickIndex) : t.Name;
+                    return $"{baseName}<{string.Join(',', arguments.Select(x => x.GetFormattedName()))}>";
                 }
                 return t.Name;
             });

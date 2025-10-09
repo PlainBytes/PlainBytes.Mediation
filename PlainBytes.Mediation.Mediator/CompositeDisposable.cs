@@ -69,7 +69,7 @@ namespace PlainBytes.Mediation.Mediator
                     {
                         disposable.Dispose();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         // Log the exception, but continue disposing other disposables
                         Debug.WriteLine($"Error disposing disposable: {ex.Message}");

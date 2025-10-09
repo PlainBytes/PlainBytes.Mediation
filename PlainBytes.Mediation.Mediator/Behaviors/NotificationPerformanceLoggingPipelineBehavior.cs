@@ -22,13 +22,11 @@ namespace PlainBytes.Mediation.Mediator.Behaviors
             {
                 await next();
 
-                logger.LogInformation("Notification {notification} published in {time} ms", notificationName, Stopwatch.GetElapsedTime(start).Milliseconds);
+                logger.LogInformation("Notification {notification} published in {time} ms", notificationName, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
             }
             catch (Exception ex)
             {
-                var requestName = TypeExtensions.GetFormattedName<TNotification>();
-
-                logger.LogError(ex, "Notification {notification} publishing failed in {time}", notificationName, Stopwatch.GetElapsedTime(start).Milliseconds);
+                logger.LogError(ex, "Notification {notification} publishing failed in {time} ms", notificationName, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
 
                 throw; // Propagate the exception
             }
