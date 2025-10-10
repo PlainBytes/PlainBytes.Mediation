@@ -96,7 +96,7 @@ public class RequestResultTests
 
         // Assert
         Assert.False(success);
-        Assert.Equal(default, value);
+        Assert.Equal(0, value);
         Assert.Equal(ex, exception);
     }
 
@@ -127,7 +127,7 @@ public class RequestResultTests
 
         // Assert
         Assert.False(gotValue);
-        Assert.Equal(default, value);
+        Assert.Equal(0, value);
     }
 
     [Fact]

@@ -45,6 +45,31 @@ namespace PlainBytes.Mediation.Mediator
         }
 
         /// <summary>
+        /// Adds an <see cref="IDisposable"/> instances to the composite.
+        /// If the composite has already been disposed, the instance is disposed immediately.
+        /// </summary>
+        /// <param name="disposables">The disposable instances to add.</param>
+        public void AddRange(IEnumerable<IDisposable> disposables)
+        {
+            ArgumentNullException.ThrowIfNull(disposables);
+            lock (_syncRoot)
+            {
+                foreach (var disposable in disposables)
+                {
+                    if (_disposables is null)
+                    {
+                        // Already disposed, dispose immediately
+                        disposable.Dispose();
+                    }
+                    else
+                    {
+                        _disposables.Add(disposable);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Disposes all added <see cref="IDisposable"/> instances and prevents further additions.
         /// Any exceptions during disposal are caught and logged.
         /// </summary>
