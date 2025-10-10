@@ -41,15 +41,17 @@ public class RequestResultExtensionsTests
         // Arrange
         var mediator = A.Fake<IMediator>();
         var command = A.Fake<IRequest<string>>();
+        var expectedResult = "ok";
+        
         A.CallTo(() => mediator.Send(command, A<CancellationToken>._))
-            .Returns("ok");
+            .Returns(expectedResult);
 
         // Act
         var result = await mediator.TrySend(command);
 
         // Assert
         Assert.True(result.Success);
-        Assert.Equal("ok", result.Value);
+        Assert.Equal(expectedResult, result.Value);
     }
 
     [Fact]
@@ -67,6 +69,7 @@ public class RequestResultExtensionsTests
 
         // Assert
         Assert.False(result.Success);
+        Assert.True(result.Error);
         Assert.Equal(ex, result.Exception);
     }
 
@@ -102,6 +105,7 @@ public class RequestResultExtensionsTests
 
         // Assert
         Assert.False(result.Success);
+        Assert.True(result.Error);
         Assert.Equal(ex, result.Exception);
     }
 
@@ -111,15 +115,17 @@ public class RequestResultExtensionsTests
         // Arrange
         var mediator = A.Fake<IMediator>();
         var query = A.Fake<IQuery<int>>();
+        var expectedResult = 123;
+        
         A.CallTo(() => mediator.Get(query, A<CancellationToken>._))
-            .Returns(42);
+            .Returns(expectedResult);
 
         // Act
         var result = await mediator.TryGet(query);
 
         // Assert
         Assert.True(result.Success);
-        Assert.Equal(42, result.Value);
+        Assert.Equal(expectedResult, result.Value);
     }
 
     [Fact]
@@ -137,6 +143,7 @@ public class RequestResultExtensionsTests
 
         // Assert
         Assert.False(result.Success);
+        Assert.True(result.Error);
         Assert.Equal(ex, result.Exception);
     }
 }
