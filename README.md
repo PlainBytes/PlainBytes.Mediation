@@ -106,3 +106,40 @@ Choose only one of AddLoggingPipelineBehaviors or AddPerformanceLoggingPipelineB
 
 For more examples, see the `SampleApp/Program.cs` file in this repository.
 
+## Benchmarks
+
+Can be found in the benchmarks project, while highly depends on hardware here is a set of results for example:
+
+BenchmarkDotNet v0.14.0, Ubuntu 24.04.3 LTS (Noble Numbat)
+AMD Ryzen 9 5900X, 1 CPU, 24 logical and 12 physical cores
+.NET SDK 9.0.110
+[Host]     : .NET 9.0.9 (9.0.925.41916), X64 RyuJIT AVX2
+DefaultJob : .NET 9.0.9 (9.0.925.41916), X64 RyuJIT AVX2
+
+### Commands and queries
+
+All handlers are registered as transients.
+
+Single and multiple execution of the same command, queries.
+
+| Method          | Mean         | Error      | StdDev     | Gen0   | Allocated |
+|---------------- |-------------:|-----------:|-----------:|-------:|----------:|
+| Send_Command    |     99.35 ns |   1.949 ns |   1.823 ns | 0.0076 |     128 B |
+| Get_Query       |    109.20 ns |   0.532 ns |   0.472 ns | 0.0076 |     128 B |
+| Send_Command_1K | 82,010.86 ns | 411.569 ns | 364.846 ns | 7.5684 |  128000 B |
+| Get_Query_1K    | 89,398.72 ns | 243.521 ns | 203.351 ns | 7.5684 |  128000 B |
+
+### Notifications
+
+All handlers are registered as transients.
+
+1K notifications executed by the different strategies with 3 handlers, there is no work done, thus parallel executions overhead is visible as expected.
+
+| Method                                     | Mean     | Error   | StdDev  | Gen0    | Allocated |
+|------------------------------------------- |---------:|--------:|--------:|--------:|----------:|
+| Publish_DefaultStrategy_MultipleHandlers   | 171.7 us | 0.50 us | 0.44 us | 15.6250 | 257.81 KB |
+| Publish_StrategicNotifications_Synchronous | 200.3 us | 0.33 us | 0.29 us | 15.6250 | 257.81 KB |
+| Publish_StrategicNotifications_Parallel    | 243.6 us | 0.83 us | 0.74 us | 32.4707 | 531.25 KB |
+
+
+
