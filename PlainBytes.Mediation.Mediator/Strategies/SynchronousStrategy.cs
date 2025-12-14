@@ -8,7 +8,7 @@ namespace PlainBytes.Mediation.Mediator.Strategies
     public class SynchronousStrategy : IPublisherStrategy
     {
         /// <summary>
-        /// <inheritdoc/>
+        /// Defines the name of the strategy
         /// </summary>
         public const string Name = "Synchronous";
 
@@ -17,8 +17,13 @@ namespace PlainBytes.Mediation.Mediator.Strategies
         /// </summary>
         public async ValueTask Publish<TNotification>(TNotification notification, IEnumerable<INotificationHandler<TNotification>> handlers, CancellationToken cancellationToken = default) where TNotification : INotification
         {
+            ArgumentNullException.ThrowIfNull(handlers);
+            ArgumentNullException.ThrowIfNull(notification);
+            
             foreach (var handler in handlers)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+                
                 await handler.Handle(notification, cancellationToken);
             }
         }

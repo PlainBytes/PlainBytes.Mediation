@@ -119,18 +119,15 @@ namespace PlainBytes.Mediation.Mediator.Tests
             // Arrange
             var notification = new TestNotification();
             var notificationHandler = A.Fake<INotificationHandler<TestNotification>>();
-            var notificationBehavior = A.Fake<INotificationBehavior<TestNotification>>();
             _serviceCollection.AddSingleton(notificationHandler);
-            _serviceCollection.AddSingleton(notificationBehavior);
-            _sut = Create();
 
-            A.CallTo(() => notificationBehavior.Handle(notification, A<Func<ValueTask>>._, CancellationToken.None)).Returns(ValueTask.CompletedTask);
+            _sut = Create();
 
             // Act
             await _sut.Publish(notification);
 
             // Assert
-            A.CallTo(() => notificationBehavior.Handle(notification, A<Func<ValueTask>>._, CancellationToken.None)).MustHaveHappened();
+            A.CallTo(() => notificationHandler.Handle(notification, CancellationToken.None)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]

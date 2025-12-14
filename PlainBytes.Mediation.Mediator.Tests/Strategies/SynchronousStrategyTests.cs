@@ -118,7 +118,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Strategies
         }
 
         [Fact]
-        public async Task Publish_When_CancellationRequested_Then_PassesToHandlers()
+        public async Task Publish_When_CancellationRequested_Then_DoNotExecuteHandlers()
         {
             // Arrange
             var strategy = new SynchronousStrategy();
@@ -133,10 +133,10 @@ namespace PlainBytes.Mediation.Mediator.Tests.Strategies
             var handlers = new[] { handler };
 
             // Act
-            await strategy.Publish(notification, handlers, cts.Token);
+            await Assert.ThrowsAsync<OperationCanceledException>(async () =>await strategy.Publish(notification, handlers, cts.Token));
 
             // Assert
-            A.CallTo(() => handler.Handle(notification, cts.Token)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => handler.Handle(notification, cts.Token)).MustNotHaveHappened();
         }
 
         [Fact]
