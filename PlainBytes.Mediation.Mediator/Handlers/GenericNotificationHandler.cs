@@ -10,6 +10,9 @@ namespace PlainBytes.Mediation.Mediator.Handlers
 
         private async ValueTask HandleConcrete(TNotification notification, IServiceProvider provider, CancellationToken cancellationToken = default)
         {
+            ArgumentNullException.ThrowIfNull(notification);
+            ArgumentNullException.ThrowIfNull(provider);
+            
             IPublisherStrategy strategy;
 
             if (notification is IStrategicNotification strategicNotification)
@@ -29,7 +32,8 @@ namespace PlainBytes.Mediation.Mediator.Handlers
             foreach (var behavior in behaviors)
             {
                 var next = handlerDelegate;
-                handlerDelegate = async () => await behavior.Handle(notification, next, cancellationToken);
+                var nextBehavior = behavior;
+                handlerDelegate = async () => await nextBehavior.Handle(notification, next, cancellationToken);
             }
 
             await handlerDelegate();

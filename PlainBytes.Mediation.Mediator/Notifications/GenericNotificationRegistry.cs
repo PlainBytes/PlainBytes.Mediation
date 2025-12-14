@@ -28,6 +28,7 @@ namespace PlainBytes.Mediation.Mediator.Notifications
         public IDisposable Register(INotificationHandler<TNotification> handler)
         {
             ArgumentNullException.ThrowIfNull(handler);
+
             return _registry.GetOrAdd(handler, h => new HandlerRegistration(this, h));
         }
 
@@ -41,16 +42,6 @@ namespace PlainBytes.Mediation.Mediator.Notifications
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void Dispose()
-        {
-            var registrations = _registry.Values.ToArray();
-
-            foreach (var registration in registrations)
-            {
-                registration.Dispose();
-            }
-                
-            _registry.Clear();
-        }
+        public void Dispose() => _registry.Clear();
     }
 }

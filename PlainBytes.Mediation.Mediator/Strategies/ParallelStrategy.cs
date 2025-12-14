@@ -8,7 +8,7 @@ namespace PlainBytes.Mediation.Mediator.Strategies
     public sealed class ParallelStrategy : IPublisherStrategy
     {
         /// <summary>
-        /// <inheritdoc/>
+        /// Defines the name of the strategy
         /// </summary>
         public const string Name = "Parallel";
 
@@ -17,6 +17,9 @@ namespace PlainBytes.Mediation.Mediator.Strategies
         /// </summary>
         public ValueTask Publish<TNotification>(TNotification notification, IEnumerable<INotificationHandler<TNotification>> handlers, CancellationToken cancellationToken = default) where TNotification : INotification
         {
+            ArgumentNullException.ThrowIfNull(handlers);
+            ArgumentNullException.ThrowIfNull(notification);
+            
             var tasks = handlers.Select(handler => handler.Handle(notification, cancellationToken))
                 .Where(x => x.IsCompletedSuccessfully is false)
                 .Select(x => x.AsTask());
