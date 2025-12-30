@@ -29,7 +29,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
             A.CallTo(logger).Where(call =>
                 call.Method.Name == "Log" &&
                 call.GetArgument<LogLevel>(0) == LogLevel.Information &&
-                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(kvp =>
+                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2)!.Any(kvp =>
                     kvp.Key == "requestName" && kvp.Value.ToString()!.Contains("TestRequest")))
                 .MustHaveHappened();
         }
@@ -71,7 +71,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
             A.CallTo(logger).Where(call =>
                 call.Method.Name == "Log" &&
                 call.GetArgument<LogLevel>(0) == LogLevel.Error &&
-                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(kvp =>
+                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2)!.Any(kvp =>
                     kvp.Key == "requestName" && kvp.Value.ToString()!.Contains("TestRequest")))
                 .MustHaveHappened();
         }
@@ -97,7 +97,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
             A.CallTo(logger).Where(call =>
                 call.Method.Name == "Log" &&
                 call.GetArgument<LogLevel>(0) == LogLevel.Error &&
-                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(kvp =>
+                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2)!.Any(kvp =>
                     kvp.Key == "time"))
                 .MustHaveHappened();
         }
@@ -121,7 +121,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
             A.CallTo(logger).Where(call =>
                 call.Method.Name == "Log" &&
                 call.GetArgument<LogLevel>(0) == LogLevel.Information &&
-                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(kvp =>
+                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2)!.Any(kvp =>
                     kvp.Key == "time"))
                 .MustHaveHappened();
         }

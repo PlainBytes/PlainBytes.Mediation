@@ -61,7 +61,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Handlers
             A.CallTo(() => handler.Handle(request, A<CancellationToken>._))
                 .Returns(ValueTask.CompletedTask);
             A.CallTo(() => behavior.Handle(request, A<Func<ValueTask<None>>>._, A<CancellationToken>._))
-                .ReturnsLazily((TestRequest r, Func<ValueTask<None>> next, CancellationToken ct) => next());
+                .ReturnsLazily((TestRequest _, Func<ValueTask<None>> next, CancellationToken _) => next());
 
             // Act
             await sut.Handle(request, serviceProvider);
@@ -88,11 +88,11 @@ namespace PlainBytes.Mediation.Mediator.Tests.Handlers
             A.CallTo(() => handler.Handle(request, A<CancellationToken>._))
                 .Returns(ValueTask.CompletedTask);
             A.CallTo(() => behavior1.Handle(request, A<Func<ValueTask<None>>>._, A<CancellationToken>._))
-                .ReturnsLazily((TestRequest r, Func<ValueTask<None>> next, CancellationToken ct) => next());
+                .ReturnsLazily((TestRequest _, Func<ValueTask<None>> next, CancellationToken _) => next());
             A.CallTo(() => behavior2.Handle(request, A<Func<ValueTask<None>>>._, A<CancellationToken>._))
-                .ReturnsLazily((TestRequest r, Func<ValueTask<None>> next, CancellationToken ct) => next());
+                .ReturnsLazily((TestRequest _, Func<ValueTask<None>> next, CancellationToken _) => next());
             A.CallTo(() => behavior3.Handle(request, A<Func<ValueTask<None>>>._, A<CancellationToken>._))
-                .ReturnsLazily((TestRequest r, Func<ValueTask<None>> next, CancellationToken ct) => next());
+                .ReturnsLazily((TestRequest _, Func<ValueTask<None>> next, CancellationToken _) => next());
 
             // Act
             await sut.Handle(request, serviceProvider);
@@ -132,7 +132,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Handlers
                 .ReturnsLazily(call =>
                 {
                     executionOrder.Add("behavior1-start");
-                    var next = call.GetArgument<Func<ValueTask<None>>>(1);
+                    var next = call.GetArgument<Func<ValueTask<None>>>(1)!;
                     var result = next().GetAwaiter().GetResult();
                     executionOrder.Add("behavior1-end");
                     return ValueTask.FromResult(result);
@@ -142,7 +142,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Handlers
                 .ReturnsLazily(call =>
                 {
                     executionOrder.Add("behavior2-start");
-                    var next = call.GetArgument<Func<ValueTask<None>>>(1);
+                    var next = call.GetArgument<Func<ValueTask<None>>>(1)!;
                     var result = next().GetAwaiter().GetResult();
                     executionOrder.Add("behavior2-end");
                     return ValueTask.FromResult(result);
@@ -152,7 +152,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Handlers
                 .ReturnsLazily(call =>
                 {
                     executionOrder.Add("behavior3-start");
-                    var next = call.GetArgument<Func<ValueTask<None>>>(1);
+                    var next = call.GetArgument<Func<ValueTask<None>>>(1)!;
                     var result = next().GetAwaiter().GetResult();
                     executionOrder.Add("behavior3-end");
                     return ValueTask.FromResult(result);
@@ -241,7 +241,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Handlers
             A.CallTo(() => handler.Handle(request, A<CancellationToken>._))
                 .Returns(ValueTask.CompletedTask);
             A.CallTo(() => behavior.Handle(request, A<Func<ValueTask<None>>>._, cts.Token))
-                .ReturnsLazily((TestRequest r, Func<ValueTask<None>> next, CancellationToken ct) => next());
+                .ReturnsLazily((TestRequest _, Func<ValueTask<None>> next, CancellationToken _) => next());
 
             // Act
             await sut.Handle(request, serviceProvider, cts.Token);

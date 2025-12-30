@@ -65,7 +65,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
             A.CallTo(logger).Where(call =>
                 call.Method.Name == "Log" &&
                 call.GetArgument<LogLevel>(0) == LogLevel.Error &&
-                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(kvp =>
+                call.GetArgument<IReadOnlyList<KeyValuePair<string, object>>>(2)!.Any(kvp =>
                     kvp.Key == "request" && kvp.Value.ToString()!.Contains("TestNotification")))
                 .MustHaveHappened();
         }

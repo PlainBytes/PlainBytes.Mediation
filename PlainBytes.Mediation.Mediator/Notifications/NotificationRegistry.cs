@@ -68,7 +68,7 @@ namespace PlainBytes.Mediation.Mediator.Notifications
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 subscriptions.Dispose(); // We failed clean up if there is any registered
                 throw;
