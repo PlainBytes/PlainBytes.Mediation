@@ -25,6 +25,12 @@ namespace PlainBytes.Mediation.Mediator.Handlers
             }
 
             var handlers = provider.GetRequiredService<IEnumerable<INotificationHandler<TNotification>>>();
+            var registry = provider.GetService<INotificationRegistry<TNotification>>();
+
+            if (registry is not null)
+            {
+                handlers = handlers.Concat(registry);
+            }
             var behaviors = provider.GetServices<INotificationBehavior<TNotification>>().Reverse();
 
             var handlerDelegate = () => strategy.Publish(notification, handlers, cancellationToken);
