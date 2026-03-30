@@ -55,10 +55,8 @@ namespace PlainBytes.Mediation.Mediator.Notifications
                         logger.LogError(exception,
                             "Error registering handler {name} for notification type {notification}", handlerType.Name,
                             notificationType.Name);
-                        if (exception.InnerException is not null)
-                        {
-                            throw exception.InnerException;
-                        }
+
+                        throw exception.InnerException ?? exception;
                     }
                     catch (Exception ex)
                     {

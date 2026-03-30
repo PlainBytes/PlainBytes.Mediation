@@ -12,7 +12,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextSucceeds_Then_LogsInformationWithTime()
         {
             // Arrange
-            var logger = A.Fake<ILogger<RequestLoggingPipelineBehavior<TestRequest, string>>>();
+            var logger = A.Fake<ILogger<RequestPerformanceLoggingPipelineBehavior<TestRequest, string>>>();
             var behavior = new RequestPerformanceLoggingPipelineBehavior<TestRequest, string>(logger);
             var request = new TestRequest();
             var expectedResult = "success";
@@ -38,7 +38,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextSucceeds_Then_ReturnsResult()
         {
             // Arrange
-            var logger = A.Fake<ILogger<RequestLoggingPipelineBehavior<TestRequest, string>>>();
+            var logger = A.Fake<ILogger<RequestPerformanceLoggingPipelineBehavior<TestRequest, string>>>();
             var behavior = new RequestPerformanceLoggingPipelineBehavior<TestRequest, string>(logger);
             var request = new TestRequest();
             var expectedResult = "test result";
@@ -54,7 +54,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextThrows_Then_LogsErrorWithTime()
         {
             // Arrange
-            var logger = A.Fake<ILogger<RequestLoggingPipelineBehavior<TestRequest, string>>>();
+            var logger = A.Fake<ILogger<RequestPerformanceLoggingPipelineBehavior<TestRequest, string>>>();
             var behavior = new RequestPerformanceLoggingPipelineBehavior<TestRequest, string>(logger);
             var request = new TestRequest();
             var expectedException = new InvalidOperationException("Test failure");
@@ -80,7 +80,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextThrows_Then_LogsTimeInErrorMessage()
         {
             // Arrange
-            var logger = A.Fake<ILogger<RequestLoggingPipelineBehavior<TestRequest, string>>>();
+            var logger = A.Fake<ILogger<RequestPerformanceLoggingPipelineBehavior<TestRequest, string>>>();
             var behavior = new RequestPerformanceLoggingPipelineBehavior<TestRequest, string>(logger);
             var request = new TestRequest();
             var expectedException = new Exception("Test");
@@ -106,7 +106,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextSucceeds_Then_LogsTimeInInformation()
         {
             // Arrange
-            var logger = A.Fake<ILogger<RequestLoggingPipelineBehavior<TestRequest, string>>>();
+            var logger = A.Fake<ILogger<RequestPerformanceLoggingPipelineBehavior<TestRequest, string>>>();
             var behavior = new RequestPerformanceLoggingPipelineBehavior<TestRequest, string>(logger);
             var request = new TestRequest();
 
@@ -130,7 +130,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_CancellationTokenPassed_Then_PassedToNext()
         {
             // Arrange
-            var logger = A.Fake<ILogger<RequestLoggingPipelineBehavior<TestRequest, string>>>();
+            var logger = A.Fake<ILogger<RequestPerformanceLoggingPipelineBehavior<TestRequest, string>>>();
             var behavior = new RequestPerformanceLoggingPipelineBehavior<TestRequest, string>(logger);
             var request = new TestRequest();
             var cts = new CancellationTokenSource();

@@ -58,7 +58,7 @@ namespace PlainBytes.Mediation.Mediator.Contracts
     /// var existingUser = await mediator.Send(new GetUserQuery { UserId = 123 });
     /// </code>
     /// </example>
-    public interface IRequest<out TResponse> : IRequest;
+    public interface IRequest<TResponse> : IRequest;
 
     /// <summary>
     /// Marker interface for query operations that return typed responses.
@@ -94,5 +94,5 @@ namespace PlainBytes.Mediation.Mediator.Contracts
     /// var searchResults = await mediator.Get(new SearchUsersQuery { SearchTerm = "john" });
     /// </code>
     /// </example>
-    public interface IQuery<out TResult> : IRequest<TResult>;
+    public interface IQuery<TResult> : IRequest<TResult>;
 }

@@ -19,12 +19,63 @@ namespace PlainBytes.Mediation.Mediator.Strategies
         {
             ArgumentNullException.ThrowIfNull(handlers);
             ArgumentNullException.ThrowIfNull(notification);
-            
-            var tasks = handlers.Select(handler => handler.Handle(notification, cancellationToken))
-                .Where(x => x.IsCompletedSuccessfully is false)
-                .Select(x => x.AsTask());
 
-            return new ValueTask(Task.WhenAll(tasks));
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var pendingTasks = new List<Task>();
+            List<Exception>? exceptions = null;
+
+            foreach (var handler in handlers)
+            {
+                try
+                {
+                    var task = handler.Handle(notification, cancellationToken);
+                    if (!task.IsCompletedSuccessfully)
+                    {
+                        pendingTasks.Add(task.AsTask());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exceptions ??= [];
+                    exceptions.Add(ex);
+                }
+            }
+
+            if (pendingTasks.Count == 0 && exceptions is null)
+            {
+                return ValueTask.CompletedTask;
+            }
+
+            return Complete(pendingTasks, exceptions);
+        }
+
+        private static async ValueTask Complete(List<Task> pendingTasks, List<Exception>? exceptions)
+        {
+            if (pendingTasks.Count > 0)
+            {
+                var whenAll = Task.WhenAll(pendingTasks);
+
+                try
+                {
+                    await whenAll;
+                }
+                catch
+                {
+                    exceptions ??= [];
+                    exceptions.AddRange(whenAll.Exception!.InnerExceptions);
+                }
+            }
+
+            if (exceptions is { Count: 1 })
+            {
+                throw exceptions[0];
+            }
+
+            if (exceptions is { Count: > 0 })
+            {
+                throw new AggregateException(exceptions);
+            }
         }
     }
 }
