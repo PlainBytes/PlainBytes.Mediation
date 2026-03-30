@@ -12,7 +12,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextSucceeds_Then_LogsInformationWithTime()
         {
             // Arrange
-            var logger = A.Fake<ILogger<NotificationLoggingPipelineBehavior<TestNotification>>>();
+            var logger = A.Fake<ILogger<NotificationPerformanceLoggingPipelineBehavior<TestNotification>>>();
             var behavior = new NotificationPerformanceLoggingPipelineBehavior<TestNotification>(logger);
             var notification = new TestNotification();
 
@@ -35,7 +35,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextSucceeds_Then_CompletesSuccessfully()
         {
             // Arrange
-            var logger = A.Fake<ILogger<NotificationLoggingPipelineBehavior<TestNotification>>>();
+            var logger = A.Fake<ILogger<NotificationPerformanceLoggingPipelineBehavior<TestNotification>>>();
             var behavior = new NotificationPerformanceLoggingPipelineBehavior<TestNotification>(logger);
             var notification = new TestNotification();
             var nextCalled = false;
@@ -55,7 +55,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextThrows_Then_LogsErrorWithTime()
         {
             // Arrange
-            var logger = A.Fake<ILogger<NotificationLoggingPipelineBehavior<TestNotification>>>();
+            var logger = A.Fake<ILogger<NotificationPerformanceLoggingPipelineBehavior<TestNotification>>>();
             var behavior = new NotificationPerformanceLoggingPipelineBehavior<TestNotification>(logger);
             var notification = new TestNotification();
             var expectedException = new InvalidOperationException("Test failure");
@@ -81,7 +81,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextThrows_Then_LogsTimeInErrorMessage()
         {
             // Arrange
-            var logger = A.Fake<ILogger<NotificationLoggingPipelineBehavior<TestNotification>>>();
+            var logger = A.Fake<ILogger<NotificationPerformanceLoggingPipelineBehavior<TestNotification>>>();
             var behavior = new NotificationPerformanceLoggingPipelineBehavior<TestNotification>(logger);
             var notification = new TestNotification();
             var expectedException = new Exception("Test");
@@ -107,7 +107,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_NextSucceeds_Then_LogsTimeInInformation()
         {
             // Arrange
-            var logger = A.Fake<ILogger<NotificationLoggingPipelineBehavior<TestNotification>>>();
+            var logger = A.Fake<ILogger<NotificationPerformanceLoggingPipelineBehavior<TestNotification>>>();
             var behavior = new NotificationPerformanceLoggingPipelineBehavior<TestNotification>(logger);
             var notification = new TestNotification();
 
@@ -130,7 +130,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_CancellationTokenPassed_Then_PassedToNext()
         {
             // Arrange
-            var logger = A.Fake<ILogger<NotificationLoggingPipelineBehavior<TestNotification>>>();
+            var logger = A.Fake<ILogger<NotificationPerformanceLoggingPipelineBehavior<TestNotification>>>();
             var behavior = new NotificationPerformanceLoggingPipelineBehavior<TestNotification>(logger);
             var notification = new TestNotification();
             var cts = new CancellationTokenSource();
@@ -151,7 +151,7 @@ namespace PlainBytes.Mediation.Mediator.Tests.Behaviors
         public async Task Handle_When_MeasuresElapsedTime_Then_TimeIsReasonable()
         {
             // Arrange
-            var logger = A.Fake<ILogger<NotificationLoggingPipelineBehavior<TestNotification>>>();
+            var logger = A.Fake<ILogger<NotificationPerformanceLoggingPipelineBehavior<TestNotification>>>();
             var behavior = new NotificationPerformanceLoggingPipelineBehavior<TestNotification>(logger);
             var notification = new TestNotification();
 

@@ -7,7 +7,7 @@ namespace PlainBytes.Mediation.Mediator.Behaviors
     /// <summary>
     /// Request logging behavior, logs exceptions in pipelines.
     /// </summary>
-    public sealed class NotificationPerformanceLoggingPipelineBehavior<TNotification>(ILogger<NotificationLoggingPipelineBehavior<TNotification>> logger)
+    public sealed class NotificationPerformanceLoggingPipelineBehavior<TNotification>(ILogger<NotificationPerformanceLoggingPipelineBehavior<TNotification>> logger)
         : INotificationBehavior<TNotification> where TNotification : INotification
     {
         /// <summary>

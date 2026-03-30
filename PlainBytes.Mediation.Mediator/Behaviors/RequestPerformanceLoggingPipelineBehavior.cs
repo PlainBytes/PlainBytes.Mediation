@@ -7,7 +7,7 @@ namespace PlainBytes.Mediation.Mediator.Behaviors
     /// <summary>
     /// Request logging behavior, logs exceptions and the time the request took in pipelines.
     /// </summary>
-    public sealed class RequestPerformanceLoggingPipelineBehavior<TRequest, TResponse>(ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> logger)
+    public sealed class RequestPerformanceLoggingPipelineBehavior<TRequest, TResponse>(ILogger<RequestPerformanceLoggingPipelineBehavior<TRequest, TResponse>> logger)
         : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest
     {
         /// <summary>

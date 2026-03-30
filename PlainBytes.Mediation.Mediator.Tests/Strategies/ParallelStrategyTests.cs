@@ -70,26 +70,23 @@ namespace PlainBytes.Mediation.Mediator.Tests.Strategies
         }
 
         [Fact]
-        public async Task Publish_When_CancellationRequested_Then_PassesToHandlers()
+        public async Task Publish_WhenCancellationRequested_ThenThrowsOperationCancelledException()
         {
             // Arrange
             var strategy = new ParallelStrategy();
             var notification = new TestNotification();
             var handler = A.Fake<INotificationHandler<TestNotification>>();
             var cts = new CancellationTokenSource();
-            
-            await cts.CancelAsync();
 
-            A.CallTo(() => handler.Handle(notification, A<CancellationToken>._))
-                .Returns(ValueTask.CompletedTask);
+            await cts.CancelAsync();
 
             var handlers = new[] { handler };
 
-            // Act
-            await strategy.Publish(notification, handlers, cts.Token);
+            // Act & Assert
+            await Assert.ThrowsAsync<OperationCanceledException>(
+                async () => await strategy.Publish(notification, handlers, cts.Token));
 
-            // Assert
-            A.CallTo(() => handler.Handle(notification, cts.Token)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => handler.Handle(notification, A<CancellationToken>._)).MustNotHaveHappened();
         }
 
         [Fact]
