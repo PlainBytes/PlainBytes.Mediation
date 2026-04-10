@@ -20,10 +20,10 @@ namespace PlainBytes.Mediation.Mediator
             ArgumentNullException.ThrowIfNull(services);
 
             return services
-                .AddSingleton<IMediator, Mediator>()
-                .AddSingleton<ISender>(x => x.GetRequiredService<IMediator>())
-                .AddSingleton<IGetter>(x => x.GetRequiredService<IMediator>())
-                .AddSingleton<IPublisher>(x => x.GetRequiredService<IMediator>())
+                .AddScoped<IMediator, Mediator>()
+                .AddScoped<ISender>(x => x.GetRequiredService<IMediator>())
+                .AddScoped<IGetter>(x => x.GetRequiredService<IMediator>())
+                .AddScoped<IPublisher>(x => x.GetRequiredService<IMediator>())
                 .AddSingleton<INotificationRegistry, NotificationRegistry>()
                 .AddSingleton(typeof(INotificationRegistry<>),typeof(GenericNotificationRegistry<>))
                 .AddPublishers(strategies ?? NotificationPublisherStrategies.GetDefault());
@@ -53,6 +53,11 @@ namespace PlainBytes.Mediation.Mediator
 
         internal static IServiceCollection AddPublishers(this IServiceCollection services, NotificationPublisherStrategies strategies)
         {
+            if (!strategies.Any())
+            {
+                throw new ArgumentException("At least one publisher strategy must be provided.", nameof(strategies));
+            }
+
             bool defaultStrategyRegistered = false;
 
             foreach (var strategy in strategies)
